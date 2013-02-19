@@ -52,10 +52,14 @@ struct elmnt {
 	char *start;
 	int hash;
 	int len;
+        unsigned char word;
 };
 
 static  inline int match(struct elmnt *a, struct elmnt *b)
 {
+    if(a->word == 0 && b->word == 0)
+        return 1;
+    else
 	return
 		a->hash == b->hash &&
 		a->len == b->len &&

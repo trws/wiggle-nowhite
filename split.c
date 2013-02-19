@@ -75,12 +75,13 @@ static int split_internal(char *start, char *end, int type,
 					while (cp < end
 					       && (isalnum(*cp)
 						   || *cp == '_'));
-				} else if (*cp == ' ' || *cp == '\t') {
+				} else if (*cp == ' ' || *cp == '\t' || *cp == '\n') {
 					do
 						cp++;
 					while (cp < end
 					       && (*cp == ' '
-						   || *cp == '\t'));
+						   || *cp == '\t'
+                                                   || *cp == '\n'));
 				} else
 					cp++;
 				break;
@@ -92,6 +93,10 @@ static int split_internal(char *start, char *end, int type,
 				list->hash = hash(start, list->len, 0);
 			else
 				list->hash = atoi(start+1);
+                        if (isalnum(*start) || *start == '_')
+                            list->word = 1;
+                        else
+                            list->word = 0;
 			list++;
 		}
 		cnt++;
